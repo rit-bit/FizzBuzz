@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Tracing;
 
 namespace FizzBuzzConsole
 {
@@ -42,42 +45,52 @@ namespace FizzBuzzConsole
             var multOf11 = IsMultipleOf(number, 11);
 
             var output = GetFizzBuzzText(number, multOf3, multOf5, multOf7, multOf11);
-            output = checkForFezz(output, number);
-            Console.WriteLine(output);
+            output = CheckForFezz(output, number);
+            Console.WriteLine(string.Join("", output));
         }
 
-        private static string GetFizzBuzzText(int num, bool fizz, bool buzz, bool bang, bool bong)
+        private static List<string> GetFizzBuzzText(int num, bool fizz, bool buzz, bool bang, bool bong)
         {
             if (bong)
             {
-                return "Bong";
+                return new List<string> {"Bong"};
             }
-            var text = "";
+            var text = new List<string>();
             if (fizz)
             {
-                text += "Fizz";
+                text.Add("Fizz");
             }
 
             if (buzz)
             {
-                text += "Buzz";
+                text.Add("Buzz");
             }
 
             if (bang)
             {
-                text += "Bang";
+                text.Add("Bang");
             }
 
-            return text == "" ? "" + num : text;
+            if (IsMultipleOf(num, 17))
+            {
+                text = ReverseFizzesBuzzesBangs(text);
+            }
+
+            return text.Count == 0 ? new List<string>{"" + num} : text;
         }
 
-        private static string checkForFezz(string output, int number)
+        private static List<string> ReverseFizzesBuzzesBangs(List<string> output)
+        {
+            return output; // TODO Write this
+        }
+
+        private static List<string> CheckForFezz(List<string> output, int number)
         {
             if (IsMultipleOf(number, 13))
             {
-                if (output.Equals("" + number))
+                if (output.Count == 1 && output[0].Equals("" + number))
                 {
-                    return "Fezz";
+                    return new List<string>{"Fezz"};
                 }
                 else
                 {
@@ -88,16 +101,27 @@ namespace FizzBuzzConsole
             return output;
         }
 
-        private static string InsertFezz(string output)
+        private static List<string> InsertFezz(List<string> output)
         {
-            var index = output.IndexOf("B", StringComparison.Ordinal);
+            var index = -1;
+            for (var i = 0; i < output.Count; i++)
+            {
+                var word = output[0];
+                if (word[0] == 'B')
+                {
+                    index = i;
+                    break;
+                }
+            }
             if (index == -1)
             {
-                return output + "Fezz";
+                output.Add("Fezz");
+                return output;
             }
             else
             {
-                return output.Insert(index, "Fezz");
+                output.Insert(index, "Fezz");
+                return output;
             }
         }
 
