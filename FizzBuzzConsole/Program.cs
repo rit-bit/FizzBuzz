@@ -185,7 +185,7 @@ namespace FizzBuzzConsole
         {
             for (var i = 0; i < output.Count; i++)
             {
-                var word = output[0];
+                var word = output[i];
                 if (word[0] == 'B')
                 {
                     return i;
