@@ -55,33 +55,29 @@ namespace FizzBuzzConsole
             {
                 return new List<string> {"Bong"};
             }
-            var text = new List<string>();
+            
+            var words = new List<string>();
             if (fizz)
             {
-                text.Add("Fizz");
+                words.Add("Fizz");
             }
 
             if (buzz)
             {
-                text.Add("Buzz");
+                words.Add("Buzz");
             }
 
             if (bang)
             {
-                text.Add("Bang");
+                words.Add("Bang");
             }
 
             if (IsMultipleOf(num, 17))
             {
-                text = ReverseFizzesBuzzesBangs(text);
+                words.Reverse();
             }
 
-            return text.Count == 0 ? new List<string>{"" + num} : text;
-        }
-
-        private static List<string> ReverseFizzesBuzzesBangs(List<string> output)
-        {
-            return output; // TODO Write this
+            return words.Count == 0 ? new List<string>{"" + num} : words;
         }
 
         private static List<string> CheckForFezz(List<string> output, int number)
