@@ -14,33 +14,32 @@ namespace FizzBuzzConsole
 
         private static void Print(int number)
         {
-            bool multOf3 = IsMultipleOf(number, 3);
-            bool multOf5 = IsMultipleOf(number, 5);
-            bool multOf7 = IsMultipleOf(number, 7);
+            var multOf3 = IsMultipleOf(number, 3);
+            var multOf5 = IsMultipleOf(number, 5);
+            var multOf7 = IsMultipleOf(number, 7);
             
-            if (multOf3)
+            Console.WriteLine(GetFizzBuzzText(number, multOf3, multOf5, multOf7));
+        }
+
+        private static string GetFizzBuzzText(int num, bool fizz, bool buzz, bool bang)
+        {
+            var text = "";
+            if (fizz)
             {
-                if (multOf5)
-                {
-                    Console.WriteLine("FizzBuzz");
-                }
-                else
-                {
-                    Console.WriteLine("Fizz");
-                }
-                
+                text += "fizz";
             }
-            else
+
+            if (buzz)
             {
-                if (number % 5 == 0)
-                {
-                    Console.WriteLine("Buzz");
-                }
-                else
-                {
-                    Console.WriteLine(number);
-                }
+                text += "buzz";
             }
+
+            if (bang)
+            {
+                text += "bang";
+            }
+
+            return text == "" ? "" + num : text;
         }
 
         private static bool IsMultipleOf(int number, int factor)
