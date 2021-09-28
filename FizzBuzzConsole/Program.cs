@@ -8,7 +8,19 @@ namespace FizzBuzzConsole
         {
             for (int i = 1; i <= 100; i++)
             {
-                Console.WriteLine(i);                
+                Print(i);
+            }
+        }
+
+        private static void Print(int number)
+        {
+            if (number % 3 == 0)
+            {
+                Console.WriteLine("Fizz");
+            }
+            else
+            {
+                Console.WriteLine(number);
             }
         }
     }
