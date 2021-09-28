@@ -39,12 +39,17 @@ namespace FizzBuzzConsole
             var multOf3 = IsMultipleOf(number, 3);
             var multOf5 = IsMultipleOf(number, 5);
             var multOf7 = IsMultipleOf(number, 7);
-            
-            Console.WriteLine(GetFizzBuzzText(number, multOf3, multOf5, multOf7));
+            var multOf11 = IsMultipleOf(number, 11);
+
+            Console.WriteLine(GetFizzBuzzText(number, multOf3, multOf5, multOf7, multOf11));
         }
 
-        private static string GetFizzBuzzText(int num, bool fizz, bool buzz, bool bang)
+        private static string GetFizzBuzzText(int num, bool fizz, bool buzz, bool bang, bool bong)
         {
+            if (bong)
+            {
+                return "bong";
+            }
             var text = "";
             if (fizz)
             {
