@@ -6,9 +6,31 @@ namespace FizzBuzzConsole
     {
         static void Main(string[] args)
         {
-            for (int i = 1; i <= 100; i++)
+            var howManyTimes = HowManyNumbersToPrint();
+            
+            for (int i = 1; i <= howManyTimes; i++)
             {
                 Print(i);
+            }
+        }
+
+        private static int HowManyNumbersToPrint()
+        {
+            while (true) {
+                Console.WriteLine("How many numbers do you want to print?");
+                var input = Console.ReadLine();
+                try
+                {
+                    return Convert.ToInt32(input);
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Please type a valid number.");
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("Number was too large. Please try a smaller number.");
+                }
             }
         }
 
