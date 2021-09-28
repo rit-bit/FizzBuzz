@@ -5,16 +5,81 @@ using System.Diagnostics.Tracing;
 
 namespace FizzBuzzConsole
 {
-    class Program
+    static class Program
     {
+        private const string Fizz = "Fizz";
+        private const string Buzz = "Buzz";
+        private const string Bang = "Bang";
+        private const string Bong = "Bong";
+        private const string Fezz = "Fezz";
+        private const string Rev = "Rev";
+        
         static void Main(string[] args)
         {
+            var options = ReadClAs(args);
             var howManyTimes = HowManyNumbersToPrint();
             
-            for (int i = 1; i <= howManyTimes; i++)
+            for (var i = 1; i <= howManyTimes; i++)
             {
-                Print(i);
+                DetermineWordsAndPrint(i, options);
             }
+        }
+
+        private static Dictionary<string, bool> ReadClAs(string[] args)
+        {
+            Dictionary<string, bool> options = new Dictionary<string, bool>
+            {
+                {Fizz, false},
+                {Buzz, false},
+                {Bang, false},
+                {Bong, false},
+                {Fezz, false},
+                {Rev, false}
+            };
+
+            foreach (var arg in args)
+            {
+                try
+                {
+                    var num = Convert.ToInt32(arg);
+                    switch (num)
+                    {
+                        case 3:
+                            options.Remove(Fizz);
+                            options.Add(Fizz, true);
+                            break;
+                        case 5:
+                            options.Remove(Buzz);
+                            options.Add(Buzz, true);
+                            break;
+                        case 7:
+                            options.Remove(Bang);
+                            options.Add(Bang, true);
+                            break;
+                        case 11:
+                            options.Remove(Bong);
+                            options.Add(Bong, true);
+                            break;
+                        case 13:
+                            options.Remove(Fezz);
+                            options.Add(Fezz, true);
+                            break;
+                        case 17:
+                            options.Remove(Rev);
+                            options.Add(Rev, true);
+                            break;
+                        default:
+                            throw new FormatException();
+                    }
+                }
+                catch (Exception ex) when (ex is FormatException or OverflowException)
+                {
+                    Console.Error.WriteLine("CLAs were invalid, arguments should each be one of the following numbers: 3, 5, 7, 11, 13, 17.");
+                    Environment.Exit(-1);
+                }
+            }
+
+            return options;
         }
 
         private static int HowManyNumbersToPrint()
@@ -37,44 +102,48 @@ namespace FizzBuzzConsole
             }
         }
 
-        private static void Print(int number)
+        private static void DetermineWordsAndPrint(int number, Dictionary<string, bool> options)
         {
             var multOf3 = IsMultipleOf(number, 3);
             var multOf5 = IsMultipleOf(number, 5);
             var multOf7 = IsMultipleOf(number, 7);
             var multOf11 = IsMultipleOf(number, 11);
 
-            var output = GetFizzBuzzText(number, multOf3, multOf5, multOf7, multOf11);
-            output = CheckForFezz(output, number);
+            var output = GetFizzBuzzText(number, multOf3, multOf5, multOf7, multOf11, options);
+            if (!multOf11 && options[Fezz])
+            {
+                output = CheckForFezz(output, number);
+            }
+            
+            if (IsMultipleOf(number, 17) && options[Rev])
+            {
+                output.Reverse();
+            }
+            
             Console.WriteLine(string.Join("", output));
         }
 
-        private static List<string> GetFizzBuzzText(int num, bool fizz, bool buzz, bool bang, bool bong)
+        private static List<string> GetFizzBuzzText(int num, bool fizz, bool buzz, bool bang, bool bong, Dictionary<string, bool> options)
         {
-            if (bong)
+            if (bong && options[Bong])
             {
-                return new List<string> {"Bong"};
+                return new List<string> {Bong};
             }
             
             var words = new List<string>();
-            if (fizz)
+            if (fizz && options[Fizz])
             {
-                words.Add("Fizz");
+                words.Add(Fizz);
             }
 
-            if (buzz)
+            if (buzz && options[Buzz])
             {
-                words.Add("Buzz");
+                words.Add(Buzz);
             }
 
-            if (bang)
+            if (bang && options[Bang])
             {
-                words.Add("Bang");
-            }
-
-            if (IsMultipleOf(num, 17))
-            {
-                words.Reverse();
+                words.Add(Bang);
             }
 
             return words.Count == 0 ? new List<string>{"" + num} : words;
@@ -86,7 +155,7 @@ namespace FizzBuzzConsole
             {
                 if (output.Count == 1 && output[0].Equals("" + number))
                 {
-                    return new List<string>{"Fezz"};
+                    return new List<string>{Fezz};
                 }
                 else
                 {
@@ -97,7 +166,7 @@ namespace FizzBuzzConsole
             return output;
         }
 
-        private static List<string> InsertFezz(List<string> output)
+        private static List<string> InsertFezz(List<string> output) // TODO Refactor
         {
             var index = -1;
             for (var i = 0; i < output.Count; i++)
@@ -111,12 +180,12 @@ namespace FizzBuzzConsole
             }
             if (index == -1)
             {
-                output.Add("Fezz");
+                output.Add(Fezz);
                 return output;
             }
             else
             {
-                output.Insert(index, "Fezz");
+                output.Insert(index, Fezz);
                 return output;
             }
         }
