@@ -41,7 +41,9 @@ namespace FizzBuzzConsole
             var multOf7 = IsMultipleOf(number, 7);
             var multOf11 = IsMultipleOf(number, 11);
 
-            Console.WriteLine(GetFizzBuzzText(number, multOf3, multOf5, multOf7, multOf11));
+            var output = GetFizzBuzzText(number, multOf3, multOf5, multOf7, multOf11);
+            output = checkForFezz(output, number);
+            Console.WriteLine(output);
         }
 
         private static string GetFizzBuzzText(int num, bool fizz, bool buzz, bool bang, bool bong)
@@ -67,6 +69,36 @@ namespace FizzBuzzConsole
             }
 
             return text == "" ? "" + num : text;
+        }
+
+        private static string checkForFezz(string output, int number)
+        {
+            if (IsMultipleOf(number, 13))
+            {
+                if (output.Equals("" + number))
+                {
+                    return "Fezz";
+                }
+                else
+                {
+                    return InsertFezz(output);
+                }
+            }
+
+            return output;
+        }
+
+        private static string InsertFezz(string output)
+        {
+            var index = output.IndexOf("B", StringComparison.Ordinal);
+            if (index == -1)
+            {
+                return output + "Fezz";
+            }
+            else
+            {
+                return output.Insert(index, "Fezz");
+            }
         }
 
         private static bool IsMultipleOf(int number, int factor)
