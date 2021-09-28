@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Tracing;
 
 namespace FizzBuzzConsole
 {
-    static class Program
+    public class FizzBuzzProgram : IEnumerable
     {
         private const string Fizz = "Fizz";
         private const string Buzz = "Buzz";
@@ -13,15 +14,15 @@ namespace FizzBuzzConsole
         private const string Bong = "Bong";
         private const string Fezz = "Fezz";
         private const string Rev = "Rev";
-        
-        static void Main(string[] args)
+
+        private static void Main(string[] args)
         {
             var options = ReadClAs(args);
             var howManyTimes = HowManyNumbersToPrint();
             
             for (var i = 1; i <= howManyTimes; i++)
             {
-                DetermineWordsAndPrint(i, options);
+                Console.WriteLine(DetermineWords(i, options));
             }
         }
 
@@ -102,7 +103,7 @@ namespace FizzBuzzConsole
             }
         }
 
-        private static void DetermineWordsAndPrint(int number, Dictionary<string, bool> options)
+        private static string DetermineWords(int number, Dictionary<string, bool> options)
         {
             var multOf3 = IsMultipleOf(number, 3);
             var multOf5 = IsMultipleOf(number, 5);
@@ -120,7 +121,7 @@ namespace FizzBuzzConsole
                 output.Reverse();
             }
             
-            Console.WriteLine(string.Join("", output));
+            return string.Join("", output);
         }
 
         private static List<string> GetFizzBuzzText(int num, bool fizz, bool buzz, bool bang, bool bong, Dictionary<string, bool> options)
@@ -198,6 +199,11 @@ namespace FizzBuzzConsole
         private static bool IsMultipleOf(int number, int factor)
         {
             return number % factor == 0;
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            throw new NotImplementedException();
         }
     }
 }
