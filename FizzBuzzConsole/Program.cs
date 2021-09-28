@@ -48,22 +48,22 @@ namespace FizzBuzzConsole
         {
             if (bong)
             {
-                return "bong";
+                return "Bong";
             }
             var text = "";
             if (fizz)
             {
-                text += "fizz";
+                text += "Fizz";
             }
 
             if (buzz)
             {
-                text += "buzz";
+                text += "Buzz";
             }
 
             if (bang)
             {
-                text += "bang";
+                text += "Bang";
             }
 
             return text == "" ? "" + num : text;
