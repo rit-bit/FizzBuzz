@@ -166,18 +166,9 @@ namespace FizzBuzzConsole
             return output;
         }
 
-        private static List<string> InsertFezz(List<string> output) // TODO Refactor
+        private static List<string> InsertFezz(List<string> output)
         {
-            var index = -1;
-            for (var i = 0; i < output.Count; i++)
-            {
-                var word = output[0];
-                if (word[0] == 'B')
-                {
-                    index = i;
-                    break;
-                }
-            }
+            var index = GetIndexForFezzInsertion(output);
             if (index == -1)
             {
                 output.Add(Fezz);
@@ -188,6 +179,20 @@ namespace FizzBuzzConsole
                 output.Insert(index, Fezz);
                 return output;
             }
+        }
+
+        private static int GetIndexForFezzInsertion(List<string> output)
+        {
+            for (var i = 0; i < output.Count; i++)
+            {
+                var word = output[0];
+                if (word[0] == 'B')
+                {
+                    return i;
+                }
+            }
+
+            return -1;
         }
 
         private static bool IsMultipleOf(int number, int factor)
