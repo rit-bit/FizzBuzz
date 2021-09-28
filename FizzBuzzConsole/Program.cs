@@ -16,7 +16,19 @@ namespace FizzBuzzConsole
         {
             if (number % 3 == 0)
             {
-                Console.WriteLine("Fizz");
+                if (number % 5 == 0)
+                {
+                    Console.WriteLine("FizzBuzz");
+                }
+                else
+                {
+                    Console.WriteLine("Fizz");
+                }
+                
+            }
+            else if (number % 5 == 0)
+            {
+                Console.WriteLine("Buzz");
             }
             else
             {
