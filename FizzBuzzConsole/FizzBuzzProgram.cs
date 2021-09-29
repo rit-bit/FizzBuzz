@@ -37,7 +37,7 @@ namespace FizzBuzzConsole
 
         private static Dictionary<string, bool> ReadClAs(string[] args)
         {
-            Dictionary<string, bool> options = new Dictionary<string, bool>
+            var options = new Dictionary<string, bool>
             {
                 {Fizz, false},
                 {Buzz, false},
