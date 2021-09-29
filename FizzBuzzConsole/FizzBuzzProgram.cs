@@ -15,14 +15,23 @@ namespace FizzBuzzConsole
         private const string Fezz = "Fezz";
         private const string Rev = "Rev";
 
+        private readonly int _limit;
+        private readonly Dictionary<string, bool> _options;
+
+        private FizzBuzzProgram(int limit, Dictionary<string, bool> options)
+        {
+            this._limit = limit;
+            this._options = options;
+        }
+
         private static void Main(string[] args)
         {
             var options = ReadClAs(args);
             var howManyTimes = HowManyNumbersToPrint();
-            
-            for (var i = 1; i <= howManyTimes; i++)
+            var fizzbuzzer = new FizzBuzzProgram(howManyTimes, options);
+            foreach (var value in fizzbuzzer)
             {
-                Console.WriteLine(DetermineWords(i, options));
+                Console.WriteLine(value);
             }
         }
 
@@ -203,7 +212,10 @@ namespace FizzBuzzConsole
 
         public IEnumerator GetEnumerator()
         {
-            throw new NotImplementedException();
+            for (var i = 1; i <= _limit; i++)
+            {
+                yield return DetermineWords(i, _options);
+            }
         }
     }
 }
