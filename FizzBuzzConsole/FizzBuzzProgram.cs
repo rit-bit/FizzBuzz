@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Tracing;
+using System.Linq;
 
 namespace FizzBuzzConsole
 {
@@ -216,6 +217,6 @@ namespace FizzBuzzConsole
             {
                 yield return DetermineWords(i, _options);
             }
-        }
+        } 
     }
 }
